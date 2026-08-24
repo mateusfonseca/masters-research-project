@@ -274,7 +274,7 @@ $ pytest --cov=src --cov-report=html
 
 The interactive HTML code coverage summary details line-by-line profiling across all client and server core modules:
 
-* View the generated report: **[pytest-cov Coverage Report](htmlcov/index.html)**
+* View the generated report: **[pytest-cov Coverage Report](https://20095949-mateus-campos.github.io/b9is101-research-project/htmlcov/index.html)**
 
 ### Summary Metrics
 
