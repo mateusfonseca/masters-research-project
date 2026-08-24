@@ -1,0 +1,42 @@
+# Modern PEP 517 build backend specifications
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+# Project metadata definition
+[project]
+name = "my_project"
+version = "0.1.0"
+
+# Package auto-discovery configuration
+[tool.setuptools.packages.find]
+where = ["."] # Search root directory for package structures
+
+# Pytest execution configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]                                # Directory containing test suites
+pythonpath = [".", "src"]                            # Include project root and src/ in Python path
+addopts = "-v --cov=src --cov=app --cov-report=html" # Enable verbose output and HTML coverage generation for src and app
+
+# Coverage measurement configuration
+[tool.coverage.run]
+source = [
+    "src",
+    "app.py"
+]
+omit = [
+    "tests/*",
+    "*/__init__.py"
+]
+
+# Exclusion rules for coverage reporting
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    'if .*?\b(IS_RUNTIME|IS_LOCAL)\b.*?:', # Exclude Streamlit UI runtime & environment checks
+    'if __name__ == "__main__":'
+]
+
+# HTML coverage report output directory
+[tool.coverage.html]
+directory = "htmlcov"

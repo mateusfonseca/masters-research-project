@@ -1,0 +1,96 @@
+# Secret Keys & Security (CRITICAL)
+# Private encryption keys, public SSH keys, and TLS certificates
+secret.key
+*.key
+*.pem
+*.pub
+
+# Local environment variable configuration files containing API keys or tokens
+.env
+.env.*
+!.env.example
+
+# Python Runtime & Environments
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python virtual environment directory isolates
+venv/
+.venv/
+env/
+ENV/
+pyvenv.cfg
+
+# Build, distribution, and packaging artifacts
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Code Coverage
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Track HTML coverage report folder for online rendering
+!htmlcov/
+!htmlcov/**
+
+# Terraform Infrastructure State & Credentials
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Operating System & IDE Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project-Specific Generated Data / Artifacts
+data/emails.csv
+data/emails.csv.zip
+data/encrypted_benchmarks_db.json
+data/encrypted_emails_db.json
+data/occurrence_matrix_sparse.npz
+data/vocabulary.json
+data/h1_fhe_latency_benchmark.csv
+data/h2_fhe_noise_boundary.csv
+data/h3_fhe_scalability_metrics.csv
+!data/.gitkeep
