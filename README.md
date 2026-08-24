@@ -23,7 +23,7 @@ A cloud search engine executing Disjunctive Normal Form (DNF) queries via Levele
 
 ### Bootstrapping and Noise Refreshing
 
-To execute multi-depth homomorphic multiplications without error, an FHE scheme must prevent accumulated noise from exceeding the critical noise threshold modulo $q$ [7]. Bootstrapping refreshes a noisy ciphertext $`[\![ m ]\!]_{q}^{\text{noisy}}`$ back to a safe noise floor $`[\![ m ]\!]_{q}^{\text{fresh}}`$ by homomorphically evaluating the scheme's own decryption circuit ($`\text{Dec}_{[\![ \text{sk} ]\!]}([\![ m ]\!]_{q}) \pmod q`$) using an encrypted evaluation key $`\text{Enc}_{\text{pk}}(\text{sk})`$ [10, 15].
+To execute multi-depth homomorphic multiplications without error, an FHE scheme must prevent accumulated noise from exceeding the critical noise threshold modulo $`q`$ [7]. Bootstrapping refreshes a noisy ciphertext $`[\![ m ]\!]_{q}^{\text{noisy}}`$ back to a safe noise floor $`[\![ m ]\!]_{q}^{\text{fresh}}`$ by homomorphically evaluating the scheme's own decryption circuit ($`\text{Dec}_{[\![ \text{sk} ]\!]}([\![ m ]\!]_{q}) \pmod q`$) using an encrypted evaluation key $`\text{Enc}_{\text{pk}}(\text{sk})`$ [10, 15].
 
 | ![bootstrapping.png](images/bootstrapping.png) |
 | :-: |
@@ -31,7 +31,7 @@ To execute multi-depth homomorphic multiplications without error, an FHE scheme 
 
 ---
 
-Because bootstrapping requires evaluating modulo $q$ arithmetic across thousands of complex polynomial multiplications, it incurs an extreme computational overhead which remains a primary barrier to FHE adoption in real-world cloud storage architectures [11, 14].
+Because bootstrapping requires evaluating modulo $`q`$ arithmetic across thousands of complex polynomial multiplications, it incurs an extreme computational overhead which remains a primary barrier to FHE adoption in real-world cloud storage architectures [11, 14].
 
 ### System Architecture & Operational Workflow
 To reconcile the computational cost of FHE with practical cloud storage requirements, a three-layer hybrid cryptographic architecture was deployed:
@@ -42,8 +42,8 @@ To reconcile the computational cost of FHE with practical cloud storage requirem
 
 The hybrid searchable encryption pipeline executes across three primary operational phases:
 
-1. **Database Initialization:** Raw text is pre-processed and converted into an inverted index with a fixed vocabulary ($M = 2048$). Document contents are symmetrically encrypted via AES-128 (Fernet), while the unencrypted sparse occurrence matrix and encrypted payloads are uploaded to the cloud.
-2. **Query Construction & Encryption:** The Streamlit client parses Boolean search queries into Disjunctive Normal Form (DNF) clauses. The `FHEClient` initializes a BFV context ($d = 8192, t = 1032193$), maps clauses to binary selection vectors, encrypts them under its public key, and sends the query payload to the server.
+1. **Database Initialization:** Raw text is pre-processed and converted into an inverted index with a fixed vocabulary ($`M = 2048`$). Document contents are symmetrically encrypted via AES-128 (Fernet), while the unencrypted sparse occurrence matrix and encrypted payloads are uploaded to the cloud.
+2. **Query Construction & Encryption:** The Streamlit client parses Boolean search queries into Disjunctive Normal Form (DNF) clauses. The `FHEClient` initializes a BFV context ($`d = 8192, t = 1032193`$), maps clauses to binary selection vectors, encrypts them under its public key, and sends the query payload to the server.
 3. **Server Processing & Decryption:** FastAPI homomorphically computes element-wise dot products between the encrypted query vectors and the unencrypted sparse matrix columns under a zero-trust model. System RAM is monitored via `psutil`. The server returns encrypted match scores, which the client decrypts locally using its secret BFV key to request and unlock matching AES payloads.
 
 | ![workflow.png](images/workflow.png) |
@@ -54,10 +54,10 @@ The hybrid searchable encryption pipeline executes across three primary operatio
 
 The performance, noise growth boundaries, and scalability metrics of the BFV-based searchable encryption scheme were evaluated across different dataset sizes and conjunction depths:
 
-### $H_1$: Latency & RAM Usage Comparison
-Compares execution time and memory footprint between unencrypted plaintext search and BFV-encrypted homomorphic search across varying dataset sizes ($N$):
+### $`H_1`$: Latency & RAM Usage Comparison
+Compares execution time and memory footprint between unencrypted plaintext search and BFV-encrypted homomorphic search across varying dataset sizes ($`N`$):
 
-| Sample Size ($N$) | Plaintext Latency (ms) | BFV Latency (ms) | Plaintext RAM (MB) | BFV RAM (MB) |
+| Sample Size ($`N`$) | Plaintext Latency (ms) | BFV Latency (ms) | Plaintext RAM (MB) | BFV RAM (MB) |
 |---|---|---|---|---|
 | 200 | 0.0986 | 43,383.92 | 0.07 | 209.82 |
 | 400 | 0.0881 | 86,822.92 | 0.01 | 307.44 |
@@ -67,14 +67,14 @@ Compares execution time and memory footprint between unencrypted plaintext searc
 
 | ![H1 Benchmark Plot](images/h1.png) |
 | :-: |
-| *Computational overhead comparison across sample sizes (𝑁 ) for Latency and RAM.* |
+| *Computational overhead comparison across sample sizes ($`N`$) for Latency and RAM.* |
 
 ---
 
-### $H_2$: Noise Boundary & Conjunction Depth
+### $`H_2`$: Noise Boundary & Conjunction Depth
 Evaluates decryption success rates and output ciphertext size under increasing conjunction depths:
 
-| Depth ($D$) | Expression | Ciphertext Size (Bytes) | Decryption Status |
+| Depth ($`D`$) | Expression | Ciphertext Size (Bytes) | Decryption Status |
 |---|---|---|---|
 | 1 | Conjunction of 1 Terms | 432,482 | Success |
 | 2 | Conjunction of 2 Terms | 432,321 | Success |
@@ -85,14 +85,14 @@ Evaluates decryption success rates and output ciphertext size under increasing c
 
 | ![H2 Noise Boundary Chart](images/h2.png) |
 | :-: |
-| *Ciphertext size and decryption status across conjunction depths ($D$).* |
+| *Ciphertext size and decryption status across conjunction depths ($`D`$).* |
 
 ---
 
-### $H_3$: Scalability Metrics
+### $`H_3`$: Scalability Metrics
 Measures overall scalability trends in BFV evaluation latency and mean ciphertext payload overhead as dataset size grows:
 
-| Dataset Size ($N$) | BFV Latency (ms) | Mean Ciphertext Size (Bytes) |
+| Dataset Size ($`N`$) | BFV Latency (ms) | Mean Ciphertext Size (Bytes) |
 |---|---|---|
 | 200 | 43,286.92 | 432,450.92 |
 | 400 | 86,529.83 | 432,445.93 |
@@ -102,7 +102,7 @@ Measures overall scalability trends in BFV evaluation latency and mean ciphertex
 
 | ![H3 Scalability Chart](images/h3.png) |
 | :-: |
-| *Scalability metrics across dataset size ($N$) for Latency and Mean Ciphertext Size.* |
+| *Scalability metrics across dataset size ($`N`$) for Latency and Mean Ciphertext Size.* |
 
 ## Part 3: Technical Stack
 
@@ -114,7 +114,7 @@ The following software, libraries, and cloud infrastructure components comprise 
 | AWS EC2 Instance [3] | `r6i.xlarge` | Memory-optimized virtual server (4 vCPUs, 32 GiB RAM). |
 | Cryptography [4] | 50.0.0 | AES-128 (Fernet) local document payload encryption/decryption. |
 | FastAPI [21] | 0.141.1 | Server-side RESTful search service endpoint. |
-| HashiCorp Terraform [13] | $\ge$ 1.2.0 | Automated cloud provisioning. |
+| HashiCorp Terraform [13] | $`\ge`$ 1.2.0 | Automated cloud provisioning. |
 | Matplotlib [25] | 3.11.1 | Visualization of benchmark trends and performance plots. |
 | Nginx [24] | 1.24.0 | Reverse proxy routing traffic to Uvicorn (100 MB payload limit). |
 | NLTK [6] | 3.10.2 | Text normalization, stop-word filtering and tokenization. |
@@ -238,9 +238,9 @@ This repository is organized into distinct components for client execution, clou
 - **README.md**: Documentation detailing environment setup, structure, execution instructions, and research context.
 
 ### Source Code (`src/`)
-- **src/client.py**: Implements the `FHEClient` class responsible for BFV context initialization ($d = 8192, t = 1032193$), public key serialization (Base64), Boolean DNF query vector encryption, and local payload/match score decryption.
+- **src/client.py**: Implements the `FHEClient` class responsible for BFV context initialization ($`d = 8192, t = 1032193`$), public key serialization (Base64), Boolean DNF query vector encryption, and local payload/match score decryption.
 - **src/server.py**: Zero-trust FastAPI RESTful service handling LRU context caching, parallel homomorphic matrix-vector dot products, real-time RAM monitoring via `psutil` (enforcing an 85% peak RAM safety threshold), and benchmark log persistence.
-- **src/setup_db.py**: Offline database setup script that parses raw Enron emails, tokenizes text and filters stop-words using NLTK, constructs a 2,048-term vocabulary, generates a CSR sparse occurrence matrix for $N = 1,000$ documents, and encrypts email bodies using Fernet AES-128.
+- **src/setup_db.py**: Offline database setup script that parses raw Enron emails, tokenizes text and filters stop-words using NLTK, constructs a 2,048-term vocabulary, generates a CSR sparse occurrence matrix for $`N = 1,000`$ documents, and encrypts email bodies using Fernet AES-128.
 - **src/__init__.py**: Package initialization file for modular python imports.
 
 ### Test Coverage (`htmlcov/`)
