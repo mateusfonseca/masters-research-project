@@ -23,7 +23,7 @@ A cloud search engine executing Disjunctive Normal Form (DNF) queries via Levele
 
 ### Bootstrapping and Noise Refreshing
 
-To execute multi-depth homomorphic multiplications without error, an FHE scheme must prevent accumulated noise from exceeding the critical noise threshold modulo $q$ [7]. Bootstrapping refreshes a noisy ciphertext $`[m]_{q}^{\text{noisy}}`$ back to a safe noise floor $[m]_{q}^{\text{fresh}}$ by homomorphically evaluating the scheme's own decryption circuit ($\text{Dec}_{\text{[sk]}}([m]_{q}) \pmod q$) using an encrypted evaluation key $\text{Enc}_{\text{pk}}(\text{sk})$ [10, 15].
+To execute multi-depth homomorphic multiplications without error, an FHE scheme must prevent accumulated noise from exceeding the critical noise threshold modulo $q$ [7]. Bootstrapping refreshes a noisy ciphertext $`\llbracket m \rrbracket_{q}^{\text{noisy}}`$ back to a safe noise floor $`\llbracket m \rrbracket_{q}^{\text{fresh}}`$ by homomorphically evaluating the scheme's own decryption circuit ($`\text{Dec}_{\llbracket \text{sk} \rrbracket}(\llbracket m \rrbracket_{q}) \pmod q`$) using an encrypted evaluation key $`\text{Enc}_{\text{pk}}(\text{sk})`$ [10, 15].
 
 | ![bootstrapping.png](images/bootstrapping.png) |
 | :-: |
