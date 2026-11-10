@@ -1,5 +1,8 @@
 # Quantifying the Privacy Tax: Performance Trade-offs of BFV-Based Searchable Encryption in Cloud Storage
 
+**Author:** Mateus Fonseca Campos  
+**Email:** mateusff8@gmail.com
+
 **Dublin Business School**  
 **MSc in Information Systems with Computing**  
 **Applied Research Project - B9IS101**  
